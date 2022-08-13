@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".nestedscroll.NestedScrollActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.example.aizhkotlindemo.nestedscroll.TestLinearLayout
+            android:orientation="vertical"
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+            <!--<androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/nested_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"/>-->
+
+            <TextView
+                android:id="@+id/tv1"
+                android:text="这是尾部1"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:background="#22ff0000"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+
+            <TextView
+                android:id="@+id/tv2"
+                android:text="这是尾部2"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:background="#22ff0000"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+            <TextView
+                android:id="@+id/tv3"
+                android:text="这是尾部tv3"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:background="#22ff0000"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+            <TextView
+                android:id="@+id/tv4"
+                android:text="这是尾部tv4"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:background="#22ff0000"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+            <TextView
+                android:id="@+id/tv5"
+                android:text="这是尾部5"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:background="#22ff0000"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+            <TextView
+                android:id="@+id/tv6"
+                android:text="这是尾部6"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:background="#22ff0000"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+
+
+           <!-- <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/nested_recycler_view2"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"/>-->
+        </com.example.aizhkotlindemo.nestedscroll.TestLinearLayout>
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
