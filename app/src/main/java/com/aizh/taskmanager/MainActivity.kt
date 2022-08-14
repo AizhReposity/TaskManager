@@ -5,7 +5,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleObserver
 import com.aizh.taskmanager.task.Scheduler
-import com.aizh.taskmanager.task.TaskManager
+import com.aizh.taskmanager.task.TaskLauncher
 import com.example.aizhkotlindemo.R
 
 class MainActivity : AppCompatActivity(), LifecycleObserver {
@@ -26,12 +26,15 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         val task5 = DelayTask(5, "任务5").runOn(Scheduler.IO)
         val task6 = DelayTask(6, "任务6").runOn(Scheduler.IO)
 
-        task1.dependOn(task2)
-        task1.dependOn(task3)
-        task2.dependOn(task4)
-        task2.dependOn(task5)
-        task3.dependOn(task6)
-        TaskManager(task1, true).start()
+        task1.beforeOn(task4)
+        task1.beforeOn(task2)
+        task4.beforeOn(task3)
+        task4.beforeOn(task5)
+        task2.beforeOn(task3)
+        task3.beforeOn(task5)
+        task4.beforeOn(task6)
+        task6.beforeOn(task5)
+        TaskLauncher(task1, false).start()
     }
 
 }

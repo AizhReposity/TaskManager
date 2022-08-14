@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 abstract class Task(protected open val id: Int, protected open val name: String? = null) {
     var scheduler = Scheduler.IO
-    private var taskManager: TaskManager? = null
+    private var taskLauncher: TaskLauncher? = null
     val dependencyTasks = mutableSetOf<Task>()
     val afterTasks = mutableSetOf<Task>()
     private val waitResultTask = ConcurrentHashMap<Int, Task>()
@@ -36,13 +36,13 @@ abstract class Task(protected open val id: Int, protected open val name: String?
         afterTasks.add(task)
     }
 
-    fun prepare(taskManager: TaskManager, isReversed: Boolean) {
-        this.taskManager = taskManager
+    fun prepare(taskLauncher: TaskLauncher, isReversed: Boolean) {
+        this.taskLauncher = taskLauncher
         dependencyTasks.forEach { waitResultTask[it.id] = it }
         if (isReversed) {
-            dependencyTasks.forEach { it.prepare(taskManager, isReversed) }
+            dependencyTasks.forEach { it.prepare(taskLauncher, isReversed) }
         } else {
-            afterTasks.forEach { it.prepare(taskManager, isReversed) }
+            afterTasks.forEach { it.prepare(taskLauncher, isReversed) }
         }
     }
 
@@ -58,7 +58,7 @@ abstract class Task(protected open val id: Int, protected open val name: String?
     private fun runningTask() {
         logD("runningTask", "isStarted:${isStarted.get()}")
         if (isStarted.compareAndSet(false, true)) {
-            taskManager?.execute(this)
+            taskLauncher?.execute(this)
         }
     }
 
@@ -83,7 +83,7 @@ abstract class Task(protected open val id: Int, protected open val name: String?
 
     protected fun finishTaskChain(reason: String) {
         logD("finishTaskChain", "reason:$reason")
-        taskManager?.finishTaskChain(reason)
+        taskLauncher?.finishTaskChain(reason)
     }
 
     private fun onDependencyTaskFinish(id: Int, taskResult: TaskResult) {
@@ -101,5 +101,9 @@ abstract class Task(protected open val id: Int, protected open val name: String?
 
     protected open fun logD(tag: String, info: Any?) {
         TaskLog.d(tag, "cur task id:$id, cur task name:$name $info")
+    }
+
+    override fun toString(): String {
+        return "Task(id=$id, name=$name, scheduler=$scheduler)"
     }
 }
